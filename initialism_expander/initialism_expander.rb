@@ -14,16 +14,10 @@ class Expander
 	}
 
 	def filter(input)
-		input.split(/\b/).map {|word| replace(word)}.join
-	end
-
-	private
-
-	def replace(word)
-		INITIALISMS[word] || word
+		input.split(/\b/).map {|word| INITIALISMS.fetch(word, word)}.join
 	end
 
 end
 
-input = gets.chomp
-puts Expander.new.filter(input)
+e = Expander.new
+ARGF.each_line {|line| puts e.filter(line)}
